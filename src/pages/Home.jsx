@@ -48,6 +48,30 @@ export default function Home() {
     </blockquote>
   </div>
 </section>
+<section className="border-t border-[#b8a2ff]/10 px-6 py-24">
+  <div className="mx-auto max-w-3xl text-center">
+    <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#b8a2ff]">
+      Feedback
+    </p>
+
+    <h2 className="mb-6 text-4xl font-semibold">
+      Tell me what this made you feel.
+    </h2>
+
+    <p className="mb-10 text-lg text-[#d6ccff]">
+      Lilac Letters is still growing. Your thoughts, ideas, and feedback genuinely help shape it.
+    </p>
+
+    <textarea
+      placeholder="Share your thoughts..."
+      className="mb-6 h-40 w-full rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-6 text-white outline-none placeholder:text-zinc-500"
+    />
+
+    <button className="rounded-full border border-[#b8a2ff]/30 px-8 py-4 text-sm transition hover:bg-white hover:text-black">
+      Send Feedback
+    </button>
+  </div>
+</section>
     </div>
   )
 }
