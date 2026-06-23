@@ -1,3 +1,4 @@
+import LetterPreview from "../components/LetterPreview"
 import { useState } from "react"
 
 export default function CreateLetter() {
@@ -10,6 +11,28 @@ export default function CreateLetter() {
   const [memory, setMemory] = useState("")
   const [hope, setHope] = useState("")
   const [password, setPassword] = useState("")
+
+  const handleSave = () => {
+    const letter = {
+      id: crypto.randomUUID(),
+      title,
+      recipient,
+      message,
+      memory,
+      hope,
+      password,
+      theme,
+      style,
+      createdAt: new Date().toISOString(),
+    }
+
+    localStorage.setItem(
+      `lunareth-${letter.id}`,
+      JSON.stringify(letter)
+    )
+
+    alert(`Letter saved!\nID: ${letter.id}`)
+  }
   return (
     <div className="min-h-screen bg-black px-6 py-20 text-white">
       <div className="mx-auto max-w-7xl">
@@ -197,42 +220,27 @@ export default function CreateLetter() {
 
           <div className="space-y-6">
 
-            <div className="rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-8">
+          <div className="rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-8">
 
-              <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#b8a2ff]">
-                Live Preview
-              </p>
+            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#b8a2ff]">
+              Live Preview
+            </p>
 
-              <div className="rounded-3xl border border-[#b8a2ff]/10 bg-[#111] p-10">
+            <LetterPreview
+              title={title}
+              message={message}
+              theme={theme}
+              style={style}
+              password={password}
+            />
 
-            <h2 className="mb-4 text-3xl font-semibold">
-              {title || "Untitled Letter"}
-            </h2>
+          </div>
 
-                <p className="leading-relaxed whitespace-pre-wrap text-[#d6ccff]">
-                {message || "Your letter will appear here as you write..."}
-              </p>
-
-                <div className="mt-10 border-t border-[#b8a2ff]/10 pt-6">
-
-                  <p className="text-sm text-[#b8a2ff]">
-                    Theme: {theme} • Style: {style}
-                  </p>      
-
-                  <p className="mt-2 text-sm text-[#888]">
-                    {password
-                      ? "Password protection enabled"
-                      : "No password set"}
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-
-            <button className="rounded-full border border-[#b8a2ff]/30 px-8 py-4 transition hover:bg-white hover:text-black">
-              Save Letter
-            </button>
+          <button
+          onClick={handleSave}
+          className="rounded-full border border-[#b8a2ff]/30 px-8 py-4 transition hover:bg-white hover:text-black">
+          Save Letter
+        </button>
 
           </div>
 
