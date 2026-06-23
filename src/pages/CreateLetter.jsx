@@ -155,32 +155,41 @@ export default function CreateLetter() {
             <div className="space-y-5">
 
               <textarea
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
                 placeholder="Who is this letter for?"
                 className="h-28 w-full rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-6 outline-none placeholder:text-zinc-500"
               />
 
               <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 placeholder="What have you been wanting to say?"
                 className="h-48 w-full rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-6 outline-none placeholder:text-zinc-500"
               />
 
               <textarea
+                value={memory}
+                onChange={(e) => setMemory(e.target.value)}
                 placeholder="What memory still stays with you?"
                 className="h-40 w-full rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-6 outline-none placeholder:text-zinc-500"
               />
 
               <textarea
+                value={hope}
+                onChange={(e) => setHope(e.target.value)}
                 placeholder="What do you hope they feel after reading this?"
                 className="h-32 w-full rounded-3xl border border-[#b8a2ff]/10 bg-white/5 p-6 outline-none placeholder:text-zinc-500"
               />
-
             </div>
 
             <input
-              type="password"
-              placeholder="Set a password"
-              className="w-full rounded-2xl border border-[#b8a2ff]/10 bg-white/5 p-5 outline-none placeholder:text-zinc-500"
-            />
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Set a password"
+                className="w-full rounded-2xl border border-[#b8a2ff]/10 bg-white/5 p-5 outline-none placeholder:text-zinc-500"
+              />
 
           </div>
 
@@ -196,24 +205,25 @@ export default function CreateLetter() {
 
               <div className="rounded-3xl border border-[#b8a2ff]/10 bg-[#111] p-10">
 
-                <h2 className="mb-4 text-3xl font-semibold">
-                  To Someone I Never Said Enough To
-                </h2>
+            <h2 className="mb-4 text-3xl font-semibold">
+              {title || "Untitled Letter"}
+            </h2>
 
-                <p className="leading-relaxed text-[#d6ccff]">
-                  Some feelings stay quiet for too long. Maybe this letter is my way of finally letting them breathe.
-                </p>
+                <p className="leading-relaxed whitespace-pre-wrap text-[#d6ccff]">
+                {message || "Your letter will appear here as you write..."}
+              </p>
 
                 <div className="mt-10 border-t border-[#b8a2ff]/10 pt-6">
 
                   <p className="text-sm text-[#b8a2ff]">
-                    Protected with a private password
-                  </p>
+                    Theme: {theme} • Style: {style}
+                  </p>      
 
                   <p className="mt-2 text-sm text-[#888]">
-                    Only the person with the link and password can open this letter.
+                    {password
+                      ? "Password protection enabled"
+                      : "No password set"}
                   </p>
-
                 </div>
 
               </div>
