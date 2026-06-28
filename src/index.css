@@ -31,3 +31,250 @@
   animation: none;
   opacity: var(--twinkle-min, 0.35);
 }
+
+:root {
+  --reading-seal-crimson: #8b1e2d;
+}
+
+.reading-experience {
+  overflow: hidden;
+}
+
+.reading-skip-button {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 40;
+  border: 1px solid;
+  background: transparent;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.reading-skip-button:hover,
+.reading-skip-button:focus-visible {
+  opacity: 0.92;
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.reading-experience-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 4rem);
+}
+
+.reading-envelope-stage {
+  perspective: 1200px;
+}
+
+.reading-envelope-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.reading-envelope-button:focus-visible {
+  outline: 2px solid var(--reading-envelope-shadow);
+  outline-offset: 8px;
+}
+
+.reading-envelope {
+  position: relative;
+  width: min(320px, 78vw);
+  height: 210px;
+}
+
+.reading-envelope-body {
+  position: absolute;
+  inset: 28px 0 0;
+  border: 1px solid color-mix(in srgb, var(--reading-envelope-body) 70%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--reading-envelope-body) 18%, transparent),
+      color-mix(in srgb, var(--reading-envelope-body) 8%, transparent)
+    ),
+    repeating-linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--reading-envelope-texture) 8%, transparent) 0 2px,
+      transparent 2px 7px
+    );
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--reading-envelope-shadow) 18%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--reading-envelope-body) 35%, white);
+}
+
+.reading-envelope-flap {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  right: 0;
+  height: 118px;
+  clip-path: polygon(0 0, 50% 78%, 100% 0);
+  border: 1px solid color-mix(in srgb, var(--reading-envelope-flap) 55%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--reading-envelope-flap) 28%, transparent),
+      color-mix(in srgb, var(--reading-envelope-body) 12%, transparent)
+    );
+  transform-style: preserve-3d;
+}
+
+.reading-envelope-seal {
+  position: absolute;
+  left: 50%;
+  top: 118px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.reading-wax-seal-wrap {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+}
+
+.reading-wax-seal {
+  width: 58px;
+  height: 58px;
+  border-radius: 9999px;
+  border: 1px solid;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      color-mix(in srgb, currentColor 35%, white),
+      color-mix(in srgb, currentColor 65%, black)
+    );
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--reading-seal-glow, transparent) 20%, transparent),
+    0 0 24px color-mix(in srgb, var(--reading-seal-glow, transparent) 45%, transparent);
+  position: relative;
+}
+
+.reading-wax-seal--sparkle,
+.reading-wax-seal--lilac {
+  --reading-seal-glow: var(--reading-envelope-shadow, #a594e0);
+}
+
+.reading-wax-seal--crimson {
+  --reading-seal-glow: var(--reading-seal-crimson);
+}
+
+.reading-wax-crack {
+  position: absolute;
+  inset: 18%;
+  border-top: 1px solid color-mix(in srgb, currentColor 70%, white);
+  transform: rotate(-24deg);
+}
+
+.reading-seal-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.reading-password-panel {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.75rem);
+  transform: translateX(-50%);
+  width: min(320px, 78vw);
+  border: 1px solid;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  z-index: 3;
+}
+
+.reading-password-title {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reading-password-body {
+  margin: 0 0 1rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.reading-password-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.reading-password-input {
+  width: 100%;
+  border: 1px solid;
+  border-radius: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.reading-password-input:focus-visible {
+  outline: 2px solid color-mix(in srgb, currentColor 40%, transparent);
+  outline-offset: 2px;
+}
+
+.reading-password-submit {
+  border: 1px solid;
+  background: transparent;
+  border-radius: 9999px;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.reading-password-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reading-password-submit:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.reading-password-error {
+  margin: 0;
+  color: var(--reading-seal-crimson);
+  font-size: 0.82rem;
+}
+
+.reading-paper-reveal {
+  position: absolute;
+  top: 38%;
+  width: min(680px, 92vw);
+  z-index: 1;
+}
+
+.reading-paper-sheet {
+  width: 100%;
+  padding: 3rem 3.5rem;
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-envelope-button,
+  .reading-skip-button,
+  .reading-password-submit {
+    transition: none;
+  }
+}
