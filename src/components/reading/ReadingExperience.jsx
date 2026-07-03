@@ -60,7 +60,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
   )
   const [state, setState] = useState(READING_STATE.ARRIVING)
   const [sealState, setSealState] = useState(SEAL_STATE.IDLE)
-  const [paperPhase, setPaperPhase] = useState("hidden")
+  const [extractionProgress, setExtractionProgress] = useState(0)
   const [passwordError, setPasswordError] = useState("")
   const [isShaking, setIsShaking] = useState(false)
   const [animationsSkipped, setAnimationsSkipped] = useState(false)
@@ -96,7 +96,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     }
     setPasswordError("")
     setIsShaking(false)
-    setPaperPhase("hidden")
+    setExtractionProgress(1)
 
     if (isProtected && !hasVerifiedPassword) {
       setAnimationsSkipped(true)
@@ -107,27 +107,23 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     }
 
     setSealState(SEAL_STATE.BROKEN)
-    setPaperPhase("complete")
     setState(READING_STATE.SKIPPED)
     setExperiencePhase(EXPERIENCE_PHASE.READING)
   }, [clearSequenceTimeout, hasVerifiedPassword, isProtected])
 
   const startRevealSequence = useCallback(() => {
     setState(READING_STATE.REVEALING)
-    setPaperPhase("rising")
+    setExtractionProgress(0)
 
+    const extractionDuration = reducedMotion ? 0.2 : 1.35
+    
     clearSequenceTimeout()
     sequenceTimeoutRef.current = setTimeout(() => {
-      setPaperPhase("unfolding")
-      sequenceTimeoutRef.current = setTimeout(() => {
-        setPaperPhase("complete")
-        sequenceTimeoutRef.current = setTimeout(() => {
-          setState(READING_STATE.READING)
-          setExperiencePhase(EXPERIENCE_PHASE.READING)
-        }, timing.letterFade)
-      }, timing.paperUnfold)
-    }, timing.paperRise)
-  }, [clearSequenceTimeout, timing.letterFade, timing.paperRise, timing.paperUnfold])
+      setState(READING_STATE.READING)
+      setExperiencePhase(EXPERIENCE_PHASE.READING)
+      setExtractionProgress(1)
+    }, extractionDuration * 1000)
+  }, [clearSequenceTimeout, reducedMotion])
 
   const beginOpening = useCallback(() => {
     setState((currentState) => {
@@ -330,6 +326,8 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
             isFlapOpen={isFlapOpen}
             reducedMotion={reducedMotion}
             onActivate={handleEnvelopeActivate}
+            letter={letter}
+            extractionProgress={extractionProgress}
           >
             <PasswordPrompt
               visible={
@@ -343,15 +341,6 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
               reducedMotion={reducedMotion}
             />
           </Envelope>
-
-          {state === READING_STATE.REVEALING && (
-            <PaperReveal
-              phase={paperPhase}
-              letter={letter}
-              styleTokens={envelopePalette}
-              reducedMotion={reducedMotion}
-            />
-          )}
         </div>
       )}
     </div>

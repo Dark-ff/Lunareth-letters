@@ -1,6 +1,7 @@
 import { forwardRef } from "react"
 import { motion } from "framer-motion"
 import WaxSeal from "./WaxSeal"
+import PaperReveal from "./PaperReveal"
 import { canActivateEnvelope } from "./readingStates"
 
 const Envelope = forwardRef(function Envelope(
@@ -13,6 +14,8 @@ const Envelope = forwardRef(function Envelope(
     isFlapOpen,
     reducedMotion,
     onActivate,
+    letter,
+    extractionProgress,
     children,
   },
   ref
@@ -21,6 +24,8 @@ const Envelope = forwardRef(function Envelope(
     sealState !== "broken" &&
     experienceState !== "reading" &&
     experienceState !== "skipped"
+
+  const paperTranslateY = reducedMotion ? 0 : 36 + extractionProgress * -400
 
   return (
     <motion.div
@@ -80,6 +85,16 @@ const Envelope = forwardRef(function Envelope(
           }}
         >
           <div className="reading-envelope-body" />
+
+          {/* Paper viewport - physical clipping boundary */}
+          <div className="reading-paper-viewport">
+            <PaperReveal
+              letter={letter}
+              styleTokens={styleTokens}
+              reducedMotion={reducedMotion}
+              translateY={paperTranslateY}
+            />
+          </div>
 
           <motion.div
             className="reading-envelope-flap"

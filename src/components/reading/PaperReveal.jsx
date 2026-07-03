@@ -2,39 +2,22 @@ import { motion } from "framer-motion"
 import LetterRenderer from "../LetterRenderer"
 
 export default function PaperReveal({
-  phase,
   letter,
   styleTokens,
   reducedMotion,
+  translateY = 0,
 }) {
-  const isHidden = phase === "hidden"
-  const isRising = phase === "rising"
-  const isUnfolding = phase === "unfolding"
-  const isComplete = phase === "complete"
-
-  const motionDuration = reducedMotion ? 0.2 : 0.65
+  const duration = reducedMotion ? 0.2 : 1.35
 
   return (
     <motion.div
       className="reading-paper-reveal"
       initial={false}
-      animate={
-        isHidden
-          ? { opacity: 0, y: reducedMotion ? 0 : 36, scaleY: reducedMotion ? 1 : 0.72 }
-          : isRising
-            ? {
-                opacity: 1,
-                y: reducedMotion ? 0 : -48,
-                scaleY: reducedMotion ? 1 : 0.72,
-              }
-            : isUnfolding || isComplete
-              ? { opacity: 1, y: reducedMotion ? 0 : -48, scaleY: 1 }
-              : { opacity: 0, y: 36, scaleY: 0.72 }
-      }
-      transition={{ duration: motionDuration, ease: "easeInOut" }}
+      animate={{ y: translateY }}
+      transition={{ duration, ease: "easeInOut" }}
       style={{
         transformOrigin: "top center",
-        pointerEvents: isComplete ? "auto" : "none",
+        pointerEvents: "auto",
       }}
     >
       <div
@@ -43,25 +26,20 @@ export default function PaperReveal({
           ...styleTokens.containerStyle,
           color: styleTokens.text,
           fontFamily: styleTokens.fontFamily,
+          padding: "3rem 3.5rem",
+          boxSizing: "border-box",
         }}
       >
-        <motion.div
-          initial={false}
-          animate={{ opacity: isComplete ? 1 : 0 }}
-          transition={{ duration: reducedMotion ? 0.15 : 0.55, ease: "easeOut" }}
-          aria-hidden={!isComplete}
-        >
-          <LetterRenderer
-            title={letter.title}
-            recipient={letter.recipient}
-            message={letter.message}
-            memory={letter.memory}
-            hope={letter.hope}
-            style={letter.style}
-            createdAt={letter.createdAt}
-            variant="full"
-          />
-        </motion.div>
+        <LetterRenderer
+          title={letter.title}
+          recipient={letter.recipient}
+          message={letter.message}
+          memory={letter.memory}
+          hope={letter.hope}
+          style={letter.style}
+          createdAt={letter.createdAt}
+          variant="full"
+        />
       </div>
     </motion.div>
   )
