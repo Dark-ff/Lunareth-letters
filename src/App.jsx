@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import MyLetters from "./pages/MyLetters"
-import Home from "./pages/Home"
-import CreateLetter from "./pages/CreateLetter"
-import ViewLetter from "./pages/ViewLetter"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MyLetters from "./pages/MyLetters";
+import Home from "./pages/Home";
+import CreateLetter from "./pages/CreateLetter";
+import ViewLetter from "./pages/ViewLetter";
 
 export default function App() {
   return (
@@ -14,5 +14,5 @@ export default function App() {
         <Route path="/letter/:id" element={<ViewLetter />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
