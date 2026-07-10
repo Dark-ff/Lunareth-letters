@@ -55,29 +55,30 @@ export default function CreateLetter() {
   }
 
   const handleSave = async () => {
-    setSubmitted(true)
-    setSaveMessage("")
+  setSubmitted(true)
+  setSaveMessage("")
 
-    if (!canSave) {
-      return
-    }
+  if (!canSave) {
+    return
+  }
 
-    setIsSaving(true)
+  setIsSaving(true)
 
-    const letter = {
-      id: crypto.randomUUID(),
-      title: title.trim(),
-      recipient: recipient.trim(),
-      message: message.trim(),
-      memory: memory.trim(),
-      hope: hope.trim(),
-      password: password.trim(),
-      theme,
-      style,
-      createdAt: new Date().toISOString(),
-    }
+  const letter = {
+    id: crypto.randomUUID(),
+    title: title.trim(),
+    recipient: recipient.trim(),
+    message: message.trim(),
+    memory: memory.trim(),
+    hope: hope.trim(),
+    password: password.trim(),
+    theme,
+    style,
+    createdAt: new Date().toISOString(),
+  }
 
-    saveLetter(letter)
+  try {
+    await saveLetter(letter)
 
     const link = `${window.location.origin}/letter/${letter.id}`
 
@@ -86,15 +87,19 @@ export default function CreateLetter() {
       setSaveMessage(`Letter saved. Share link copied: ${link}`)
     } catch {
       setSaveMessage(`Letter saved. Copy this share link: ${link}`)
-    } finally {
-      setIsSaving(false)
     }
+  } catch (error) {
+    console.error(error)
+    setSaveMessage(error.message || "Failed to save letter. Please try again.")
+  } finally {
+    setIsSaving(false)
   }
+}
 
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-black px-6 pt-24 pb-16 text-white">
+      <div className="lunareth-themed-page min-h-screen bg-black px-6 pt-24 pb-16 text-white">
         <div className="mx-auto max-w-7xl">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#b8a2ff]">
             Create Letter

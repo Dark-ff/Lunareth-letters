@@ -1,5 +1,70 @@
 @import "tailwindcss";
 
+:root {
+  --lunareth-app-bg: #07060c;
+  --lunareth-app-text: #f7f4ff;
+  --lunareth-app-muted: #d6ccff;
+  --lunareth-app-accent: #b8a2ff;
+  --lunareth-app-border: rgba(184, 162, 255, 0.16);
+  --lunareth-app-surface: rgba(255, 255, 255, 0.05);
+}
+
+:root[data-lunareth-theme="Moonlit"] {
+  --lunareth-app-bg: #07060c;
+  --lunareth-app-text: #f7f4ff;
+  --lunareth-app-muted: #d6ccff;
+  --lunareth-app-accent: #b8a2ff;
+  --lunareth-app-border: rgba(184, 162, 255, 0.16);
+  --lunareth-app-surface: rgba(255, 255, 255, 0.05);
+}
+
+:root[data-lunareth-theme="Old Paper"] {
+  --lunareth-app-bg: #20170f;
+  --lunareth-app-text: #f5ead0;
+  --lunareth-app-muted: #d8bd92;
+  --lunareth-app-accent: #c9a87c;
+  --lunareth-app-border: rgba(201, 168, 124, 0.22);
+  --lunareth-app-surface: rgba(245, 234, 208, 0.07);
+}
+
+:root[data-lunareth-theme="Dark Aesthetic"] {
+  --lunareth-app-bg: #050505;
+  --lunareth-app-text: #e4e4e4;
+  --lunareth-app-muted: #b7b7b7;
+  --lunareth-app-accent: #e03c50;
+  --lunareth-app-border: rgba(224, 60, 80, 0.2);
+  --lunareth-app-surface: rgba(255, 255, 255, 0.045);
+}
+
+:root[data-lunareth-theme="Minimal"] {
+  --lunareth-app-bg: #f7f7f7;
+  --lunareth-app-text: #111111;
+  --lunareth-app-muted: #525252;
+  --lunareth-app-accent: #111111;
+  --lunareth-app-border: rgba(17, 17, 17, 0.12);
+  --lunareth-app-surface: rgba(255, 255, 255, 0.78);
+}
+
+body {
+  background: var(--lunareth-app-bg);
+}
+
+.lunareth-themed-page {
+  background: var(--lunareth-app-bg) !important;
+  color: var(--lunareth-app-text);
+  transition: background-color 420ms ease, color 420ms ease;
+}
+
+.lunareth-glass-nav {
+  background: color-mix(in srgb, var(--lunareth-app-bg) 78%, transparent) !important;
+  border-color: var(--lunareth-app-border) !important;
+}
+
+.lunareth-glass-panel {
+  background: color-mix(in srgb, var(--lunareth-app-bg) 84%, transparent) !important;
+  border-color: var(--lunareth-app-border) !important;
+}
+
 @keyframes lunareth-star-twinkle {
   0%,
   100% {

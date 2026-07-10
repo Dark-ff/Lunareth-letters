@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import { formatLetterDate } from "../lib/letterConfig"
 import { deleteLetter, getSavedLetters } from "../lib/letterStorage"
@@ -101,16 +101,32 @@ function SealBadge({ compact = false }) {
 }
 
 export default function MyLetters() {
-  const [letters, setLetters] = useState(() => getSavedLetters())
+  const [letters, setLetters] = useState([])
   const [letterToDelete, setLetterToDelete] = useState(null)
   const [deletePassword, setDeletePassword] = useState("")
   const [deleteError, setDeleteError] = useState("")
 
-  const closeDeleteDialog = () => {
-    setLetterToDelete(null)
-    setDeletePassword("")
-    setDeleteError("")
+  useEffect(() => {
+  let isMounted = true
+
+  async function loadLetters() {
+    try {
+      const savedLetters = await getSavedLetters()
+
+      if (isMounted) {
+        setLetters(savedLetters)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  loadLetters()
+
+  return () => {
+    isMounted = false
+  }
+}, [])
 
   const requestDelete = (letter) => {
     setLetterToDelete(letter)
@@ -118,14 +134,27 @@ export default function MyLetters() {
     setDeleteError("")
   }
 
-  const deleteSelectedLetter = () => {
+  const closeDeleteDialog = () => {
+  setLetterToDelete(null)
+  setDeletePassword("")
+  setDeleteError("")
+}
+
+  const deleteSelectedLetter = async () => {
     if (!letterToDelete) return
 
-    deleteLetter(letterToDelete.id)
-    setLetters((currentLetters) =>
-      currentLetters.filter((letter) => letter.id !== letterToDelete.id)
-    )
-    closeDeleteDialog()
+    try {
+  await deleteLetter(letterToDelete.id)
+
+  setLetters((currentLetters) =>
+    currentLetters.filter((letter) => letter.id !== letterToDelete.id)
+  )
+
+  closeDeleteDialog()
+} catch (error) {
+  console.error(error)
+  setDeleteError("Failed to delete letter. Please try again.")
+}
   }
 
   const confirmDelete = () => {
@@ -159,7 +188,7 @@ export default function MyLetters() {
   return (
     <>
       <Navbar />
-      <div className="relative min-h-screen overflow-hidden bg-[#07060c] px-6 pt-24 pb-16 text-white">
+      <div className="lunareth-themed-page relative min-h-screen overflow-hidden bg-[#07060c] px-6 pt-24 pb-16 text-white">
         {/* Ambient glow, purely decorative */}
         <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-[#b8a2ff]/[0.07] blur-[140px]" />
         <div className="pointer-events-none absolute top-1/3 right-0 h-[360px] w-[360px] translate-x-1/2 rounded-full bg-[#b8a2ff]/[0.05] blur-[120px]" />
