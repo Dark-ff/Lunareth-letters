@@ -343,3 +343,66 @@ body {
     transition: none;
   }
 }
+
+/* ---------------------------------------------------------------- */
+/* MeteorField — subtle, infrequent meteors for the reading          */
+/* experience background only. Layered behind envelope/UI (z-0).     */
+/* ---------------------------------------------------------------- */
+
+.meteor-field {
+  contain: layout style paint;
+}
+
+.meteor-field-meteor {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 244, 255, 0.95),
+    rgba(184, 162, 255, 0.55) 45%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px 1px rgba(184, 162, 255, 0.55),
+    0 0 14px 3px rgba(247, 244, 255, 0.25);
+  transform-origin: left center;
+  animation: lunareth-meteor-travel var(--meteor-duration, 3200ms) ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.meteor-field-meteor::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(247, 244, 255, 0.85), transparent);
+  transform-origin: left center;
+}
+
+@keyframes lunareth-meteor-travel {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--meteor-angle, 24deg)) translateX(0);
+  }
+  8% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--meteor-angle, 24deg)) translateX(var(--meteor-distance, 900px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meteor-field-meteor {
+    animation: none;
+    display: none;
+  }
+}

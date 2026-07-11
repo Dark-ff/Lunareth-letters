@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import StarField from "../background/StarField"
+import MeteorField from "../MeteorField"
 import LetterRenderer from "../LetterRenderer"
 import { getLetterStyle } from "../../lib/letterConfig"
 import Envelope from "./Envelope"
@@ -286,6 +287,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
   return (
     <div style={pageStyle} className="reading-experience">
       <StarField animated={!reducedMotion} />
+      <MeteorField />
 
       {showSkip && (
         <button
