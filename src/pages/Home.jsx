@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#05060D] text-[#E8E4F4]">
+    <div className="lunareth-themed-page relative min-h-screen bg-[#05060D] text-[#E8E4F4]">
       <StarField />
       <div className="relative z-10">
       <Navbar />
