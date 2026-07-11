@@ -2,8 +2,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useAuth } from "../hooks/useAuth"
-import { useAppTheme } from "../hooks/useAppTheme"
-import { getLetterStyle } from "../lib/letterConfig"
 
 const baseLinks = [{ label: "Home", to: "/" }]
 
@@ -21,19 +19,25 @@ const loggedInLinks = [
   { label: "Profile", to: "/my-letters", isProfile: true },
 ]
 
-function MoonMark({ className = "h-5 w-5" }) {
+function MoonMark({ className = "h-6 w-6" }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={className}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Main crescent */}
       <path
-        d="M16.6 3.5a8.4 8.4 0 1 0 3.7 12.6A9.4 9.4 0 0 1 16.6 3.5Z"
+        d="M16.8 3.6A8.8 8.8 0 1 0 20.4 16a7.2 7.2 0 1 1-3.6-12.4Z"
         fill="currentColor"
       />
+
+      {/* Small star */}
       <path
-        d="M7.4 15.8c2.7-.5 5.1-1.9 7.1-4.1"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-        opacity="0.55"
+        d="M17.9 5.1l.35 1.05 1.05.35-1.05.35-.35 1.05-.35-1.05-1.05-.35 1.05-.35.35-1.05Z"
+        fill="currentColor"
+        opacity="0.95"
       />
     </svg>
   )
@@ -83,90 +87,6 @@ function NavLink({ link, isActive, onClick }) {
   )
 }
 
-function ThemeSelector({ isCompact = false }) {
-  const { appTheme, setAppTheme, themeNames } = useAppTheme()
-  const [isOpen, setIsOpen] = useState(false)
-  const currentTokens = getLetterStyle(appTheme)
-
-  const chooseTheme = (themeName) => {
-    setAppTheme(themeName)
-    setIsOpen(false)
-  }
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen((current) => !current)}
-        aria-expanded={isOpen}
-        className={`flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] text-sm text-[#d6ccff] transition-colors duration-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#b8a2ff]/50 ${
-          isCompact ? "w-full justify-between px-4 py-2" : "px-3 py-2"
-        }`}
-      >
-        <span
-          className="h-3 w-3 rounded-full ring-1 ring-white/30"
-          style={{ background: currentTokens.accent }}
-          aria-hidden="true"
-        />
-        <span>{isCompact ? `Theme: ${appTheme}` : appTheme}</span>
-        <motion.span
-          aria-hidden="true"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          className="text-xs text-[#d6ccff]/70"
-        >
-          v
-        </motion.span>
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -4, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className={`absolute right-0 z-20 mt-2 overflow-hidden rounded-3xl border border-white/10 bg-black/85 p-2 shadow-[0_24px_80px_-36px_rgba(184,162,255,0.75)] backdrop-blur-xl ${
-              isCompact ? "left-0 right-0" : "w-56"
-            }`}
-          >
-            <div className="grid gap-1">
-              {themeNames.map((themeName) => {
-                const tokens = getLetterStyle(themeName)
-                const isActive = appTheme === themeName
-
-                return (
-                  <button
-                    key={themeName}
-                    type="button"
-                    onClick={() => chooseTheme(themeName)}
-                    className={`relative flex items-center gap-3 rounded-2xl px-3 py-2 text-left text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#b8a2ff]/50 ${
-                      isActive ? "text-white" : "text-[#d6ccff]/75 hover:bg-white/[0.06] hover:text-white"
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.span
-                        layoutId={`lunareth-theme-option-${isCompact ? "mobile" : "desktop"}`}
-                        className="absolute inset-0 -z-10 rounded-2xl border border-[#b8a2ff]/20 bg-white/[0.08]"
-                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                      />
-                    )}
-                    <span
-                      className="h-3.5 w-3.5 rounded-full ring-1 ring-white/30"
-                      style={{ background: tokens.accent }}
-                      aria-hidden="true"
-                    />
-                    <span>{themeName}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
 export default function Navbar() {
   const { user, loading, signOut } = useAuth()
   const location = useLocation()
@@ -203,10 +123,10 @@ export default function Navbar() {
           onClick={closeMobileNav}
           className="group flex items-center gap-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#b8a2ff]/50"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#b8a2ff]/25 bg-[#b8a2ff]/10 text-[#d6ccff] transition-colors duration-300 group-hover:text-white">
+          <span className="flex h-10 w-10 items-center justify-center text-[#d6ccff] transition-all duration-300 group-hover:scale-110 group-hover:text-white">
             <MoonMark />
           </span>
-          <span className="hidden font-serif text-lg font-normal tracking-wide text-white sm:block">
+          <span className="hidden select-none font-serif text-xl tracking-[0.15em] text-white transition-all duration-300 group-hover:text-[#e8deff] sm:block">
             Lunareth
           </span>
         </Link>
@@ -230,8 +150,6 @@ export default function Navbar() {
               Logout
             </button>
           )}
-
-          <ThemeSelector />
         </div>
 
         <button
@@ -275,7 +193,6 @@ export default function Navbar() {
                 </button>
               )}
 
-              <ThemeSelector isCompact />
             </div>
           </motion.div>
         )}

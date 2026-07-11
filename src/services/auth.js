@@ -15,6 +15,20 @@ import { supabase } from "../lib/supabase"
  * Signup.jsx for the calling convention).
  */
 
+
+export async function signInWithGoogle() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/`,
+    },
+  })
+
+  if (error) {
+    throw error
+  }
+}
+
 export async function signUpWithEmail({ email, password }) {
   const { data, error } = await supabase.auth.signUp({ email, password })
 
