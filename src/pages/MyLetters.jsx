@@ -152,8 +152,9 @@ export default function MyLetters() {
 
   closeDeleteDialog()
 } catch (error) {
-  console.error(error)
-  setDeleteError("Failed to delete letter. Please try again.")
+  console.error("Delete failed:", error)
+  alert(error.message)
+  setDeleteError(error.message)
 }
   }
 

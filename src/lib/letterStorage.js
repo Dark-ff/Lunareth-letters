@@ -66,9 +66,19 @@ export async function getLetter(id) {
 }
 
 export async function getSavedLetters() {
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser()
+
+  if (userError || !user) {
+    throw new Error("User is not authenticated")
+  }
+
   const { data, error } = await supabase
     .from("letters")
     .select("*")
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false })
 
   if (error) {
