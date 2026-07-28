@@ -260,7 +260,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "2rem",
+    padding: "clamp(1rem, 4vw, 2rem)",
     position: "relative",
     ...styleTokens.pageExtra,
   }
@@ -269,7 +269,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     ...styleTokens.containerStyle,
     width: "100%",
     maxWidth: "680px",
-    padding: "3rem 3.5rem",
+    padding: "clamp(1.25rem, 4vw, 3rem)",
   }
 
   const showSkip =

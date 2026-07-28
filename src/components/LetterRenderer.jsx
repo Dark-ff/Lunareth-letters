@@ -22,18 +22,18 @@ const fullLayout = {
   titleTag: "h1",
   titleSize: "2rem",
   titleMargin: "0.5rem",
-  recipientSize: "0.8rem",
+  recipientSize: "clamp(.9rem, 2vw, 1rem)",
   recipientMargin: "0.25rem",
-  dateSize: "0.78rem",
+  dateSize: "0.85rem",
   dateMargin: "1.5rem",
   dividerMargin: "1.75rem",
-  messageSize: "1.05rem",
+  messageSize: "clamp(1rem, 2vw, 1.1rem)",
   messageLineHeight: "1.95",
   sectionDividerMargin: "2rem 0 1.5rem",
   sectionGap: "1.25rem",
-  sectionLabelSize: "0.7rem",
+  sectionLabelSize: "clamp(.82rem, 1.8vw, .9rem)",
   sectionLabelMargin: "0.35rem",
-  sectionTextSize: "0.95rem",
+  sectionTextSize: "clamp(1rem, 2vw, 1.05rem)",
 }
 
 export default function LetterRenderer({
